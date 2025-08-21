@@ -1,0 +1,11 @@
+﻿supplier_id,name,otd_rate,cost_variance,quality_ppm,risk_events_12m
+S001,Supplier 1,0.96,-0.01,120,0
+S002,Supplier 2,0.92,0.02,350,1
+S003,Supplier 3,0.88,0.01,800,2
+S004,Supplier 4,0.98,-0.03,90,0
+S005,Supplier 5,0.9,0,500,3
+S006,Supplier 6,0.94,-0.02,250,1
+S007,Supplier 7,0.86,0.03,1100,4
+S008,Supplier 8,0.91,-0.01,400,0
+S009,Supplier 9,0.95,0.01,220,1
+S010,Supplier 10,0.89,0.02,700,2
