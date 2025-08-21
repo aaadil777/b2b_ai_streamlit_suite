@@ -1,0 +1,6 @@
+[theme]
+base="dark"
+primaryColor="#45b7a9"    # teal accent
+backgroundColor="#0E1117"
+secondaryBackgroundColor="#1B1F2A"
+textColor="#FFFFFF"
