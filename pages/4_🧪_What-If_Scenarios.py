@@ -1,9 +1,9 @@
 # pages/4_🧪_What-If_Scenarios.py
-
 import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import plotly.express as px
 
 st.set_page_config(page_title="What-If Scenarios", layout="wide")
 st.title("🧪 What-If Scenarios (Inventory)")
@@ -39,7 +39,10 @@ safety = ss_sigma * sigma
 start = pd.to_datetime(hist["date"].max()) + pd.Timedelta(days=1)
 dates = pd.date_range(start, periods=horizon, freq="D")
 rng = np.random.default_rng(123)
-future_demand = np.clip(rng.normal(mu, sigma if sigma > 0 else max(mu*0.1, 1), horizon), 0, None).astype(int)
+future_demand = np.clip(
+    rng.normal(mu, sigma if sigma > 0 else max(mu * 0.1, 1), horizon),
+    0, None
+).astype(int)
 
 on_hand, backlog, pipe = 0.0, 0.0, []
 rows = []
@@ -58,7 +61,6 @@ for d, dem in zip(dates, future_demand):
     # Ship demand
     available = max(0.0, on_hand - backlog)
     shipped = min(available, dem + backlog)
-
     if shipped >= backlog:
         shipped_net = shipped - backlog
         backlog = 0.0
@@ -110,5 +112,19 @@ plt.xlabel("date")
 plt.legend()
 st.pyplot(fig, clear_figure=True)
 
+# --- Extra visuals for logistics teams ---
+sim["inv_position"] = sim["on_hand"] - sim["backlog"]
+figA = px.area(sim, x="date", y=["demand", "inv_position"],
+               title="Demand vs Inventory Position (units)")
+st.plotly_chart(figA, use_container_width=True)
+
+figB = px.histogram(sim, x="backlog", nbins=25, title="Backlog Distribution")
+st.plotly_chart(figB, use_container_width=True)
+
 # --- Export ---
-st.download_button("Export scenario CSV", sim.to_csv(index=False), file_name=f"what_if_{sku}.csv", mime="text/csv")
+st.download_button(
+    "⬇️ Export scenario CSV",
+    sim.to_csv(index=False),
+    file_name=f"what_if_{sku}.csv",
+    mime="text/csv",
+)
