@@ -1,4 +1,4 @@
-# B2B AI Mini (Resume Project)
+# B2B AI Mini Streamlit Suite Project
 
 Upload CSVs to:
 - Rank suppliers by KPI-weighted score
